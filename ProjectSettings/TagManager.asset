@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Dealth
   - Foot
+  - StopAnim
   layers:
   - Default
   - TransparentFX

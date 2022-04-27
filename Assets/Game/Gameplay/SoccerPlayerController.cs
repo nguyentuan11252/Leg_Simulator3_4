@@ -52,9 +52,23 @@ public class SoccerPlayerController : MonoBehaviour
                             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                             if (!_plane.Raycast(ray, out var enter)) return;
                             var pos = ray.GetPoint(enter);
+                            if (pos.x > 6f)
+                            {
+                                pos.x = 6f;
+                            }
+                            if (pos.x < -2)
+                            {
+                                pos.x = -2;
+                            }
+                            if (pos.y > 2f)
+                            {
+                                pos.y = 2f;
+                            }
+                            if (pos.y < -2f)
+                            {
+                                pos.y = -2f;
+                            }
                             var v = pos - footBody.position;
-                            //v.x = 3;
-                            Debug.Log("Captured");
                             footBody.AddForce(v * force);
                         }
                         break;

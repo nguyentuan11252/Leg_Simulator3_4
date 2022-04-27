@@ -27,7 +27,7 @@ public class AnimationEnemy : MonoBehaviour
         }
         if (Enemy.isCheck == false)
         {
-            //anim.enabled = true;
+            anim.enabled = true;
         }
     }
     public void SetAnimation(AnimationType type)

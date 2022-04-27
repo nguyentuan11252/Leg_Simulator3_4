@@ -58,24 +58,25 @@ public class LegCharacter : MonoBehaviour
     {
         Vector3 posMouse = Input.mousePosition;
         Ray ray = mainCamera.ScreenPointToRay(posMouse);
-
+        
         if (Input.GetMouseButtonDown(0))
         {
             _startVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
             v = (_startVc.y - _endVc.y) * 0.5f;
+
             _touched = false;
             if (v != 0)
             {
                 float time2 = 0;
-                if (Time.time - time2 >= 0.5f)
+                if (Time.time - time2 >= 0.9f)
                 {
                     time2 = Time.time;
                     FootCharacterMotor.Ins.isMoveLeg = true;
-                    pedalObj.transform.DORotate(new Vector3(0, 0, transform.rotation.z + 50f), 1 - v);
+                    pedalObj.transform.DORotate(new Vector3(0, 0, transform.rotation.z + 70f), 1 - v);
                     StartCoroutine(ResetPedal());
                     particleSmoke.Play();
                 }
-                if (v > 0.2f)
+                if (v > 0.45f)
                 {
                     //Run
                     //phut phao
@@ -84,18 +85,17 @@ public class LegCharacter : MonoBehaviour
                     particleSmoke2.Play();
                     StartCoroutine(ParticleWin());
                 }
-                else if (v < 0.2f)
+                else if (v < 0.45f)
                 {
                     particleSmoke2.Stop();
                     //rung
                 }
             }
+
         }
         if (Input.GetMouseButtonUp(0))
         {
             _endVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
-            
-
         }
         if (!_touched) return;
         
