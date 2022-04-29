@@ -9,6 +9,7 @@ TagManager:
   - Dealth
   - Foot
   - StopAnim
+  - Wave
   layers:
   - Default
   - TransparentFX

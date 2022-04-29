@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
             isStop = true;
             Camera.main.transform.position = posCamera.transform.position;
             Camera.main.transform.rotation = posCamera.transform.rotation;
-            AnimationController.fullBody.enabled = true;
+            /*AnimationController.fullBody.enabled = true;*/
             Foot.boxColliderFoot.enabled = true;
         }
 

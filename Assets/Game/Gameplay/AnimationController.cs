@@ -1,9 +1,9 @@
-using RootMotion.FinalIK;
+/*using RootMotion.FinalIK;*/
 using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-    public static FullBodyBipedIK fullBody;
+    /*public static FullBodyBipedIK fullBody;*/
     public static AnimationController Ins;
     Animator animator;
     string RUN_KEY = "IsRun";
@@ -16,8 +16,8 @@ public class AnimationController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        fullBody = GetComponent<FullBodyBipedIK>();
-        fullBody.enabled = false;
+        /*fullBody = GetComponent<FullBodyBipedIK>();
+        fullBody.enabled = false;*/
         animator.enabled = false;
     }
     public void SetAnimation(AnimationType type)

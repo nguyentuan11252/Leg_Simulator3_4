@@ -87,6 +87,12 @@ namespace RootMotion
         public string[] animationStates = new string[0];
 
         /// <summary>
+        /// Sets the baked animation clip to loop time and matches the last frame keys with the first. Note that if you are overwriting a previously baked clip, AnimationClipSettings will be copied from the existing clip.
+        /// </summary>
+        [Tooltip("Sets the baked animation clip to loop time and matches the last frame keys with the first. Note that when overwriting a previously baked clip, AnimationClipSettings will be copied from the existing clip.")]
+        public bool loop = true;
+
+        /// <summary>
         /// The folder to save the baked AnimationClips to.
         /// </summary>
         [Tooltip("The folder to save the baked AnimationClips to.")]
@@ -107,87 +113,8 @@ namespace RootMotion
         public bool isBaking { get; private set; }
         public float bakingProgress { get; private set; }
 
-        [HideInInspector] public Animator animator;
-        [HideInInspector] public PlayableDirector director;
-
-        public delegate void BakerDelegate(AnimationClip clip, float time);
-
-        public BakerDelegate OnStartClip;
-        public BakerDelegate OnUpdateClip;
-
-        [System.Serializable]
-        public class ClipSettings
-        {
-            [System.Serializable]
-            public enum BasedUponRotation
-            {
-                Original = 0,
-                BodyOrientation = 1,
-            }
-
-            [System.Serializable]
-            public enum BasedUponY
-            {
-                Original = 0,
-                CenterOfMass = 1,
-                Feet = 2,
-            }
-
-            [System.Serializable]
-            public enum BasedUponXZ
-            {
-                Original = 0,
-                CenterOfMass = 1,
-            }
-
-            public bool loopTime;
-            public bool loopBlend;
-            public float cycleOffset;
-            public bool loopBlendOrientation;
-            public BasedUponRotation basedUponRotation;
-            public float orientationOffsetY;
-            public bool loopBlendPositionY;
-            public BasedUponY basedUponY;
-            public float level;
-            public bool loopBlendPositionXZ;
-            public BasedUponXZ basedUponXZ;
-            public bool mirror;
-
-#if UNITY_EDITOR
-
-            public void ApplyTo(AnimationClipSettings settings)
-            {
-                settings.loopTime = loopTime;
-                settings.loopBlend = loopBlend;
-                settings.cycleOffset = cycleOffset;
-
-                settings.loopBlendOrientation = loopBlendOrientation;
-                settings.keepOriginalOrientation = basedUponRotation == BasedUponRotation.Original;
-                settings.orientationOffsetY = orientationOffsetY;
-
-                settings.loopBlendPositionY = loopBlendPositionY;
-                settings.keepOriginalPositionY = basedUponY == BasedUponY.Original;
-                settings.heightFromFeet = basedUponY == BasedUponY.Feet;
-                settings.level = level;
-
-                settings.loopBlendPositionXZ = loopBlendPositionXZ;
-                settings.keepOriginalPositionXZ = basedUponXZ == BasedUponXZ.Original;
-
-                settings.mirror = mirror;
-            }
-
-#endif
-        }
-
-        /// <summary>
-        /// If enabled, baked clips will have the same AnimationClipSettings as the clips used for baking. If disabled, clip settings from below will be applied to all the baked clips.
-        /// </summary>
-        [Tooltip("If enabled, baked clips will have the same AnimationClipSettings as the clips used for baking. If disabled, clip settings from below will be applied to all the baked clips.")] public bool inheritClipSettings;
-
-        /// <summary>
-        /// AnimationClipSettings applied to the baked animation clip.
-        /// </summary>
-        [Tooltip("AnimationClipSettings applied to the baked animation clip.")] public ClipSettings clipSettings;
+        [SerializeField] [HideInInspector] public Animator animator;
+        [SerializeField] [HideInInspector] public PlayableDirector director;
 
         protected abstract Transform GetCharacterRoot();
         protected abstract void OnStartBaking();
@@ -195,7 +122,6 @@ namespace RootMotion
         protected abstract void OnSetCurves(ref AnimationClip clip);
         protected abstract void OnSetKeyframes(float time, bool lastFrame);
         protected float clipLength { get; private set; }
-        protected bool addLoopFrame;
 
 #if UNITY_EDITOR
         private AnimationClip[] bakedClips = new AnimationClip[0];
@@ -212,21 +138,20 @@ namespace RootMotion
 
         private float currentClipTime;
         private float clipFrameInterval;
+
+        private const bool setLoopFrame = true; // Makes sure first and last keyframes in the baked clip match up if baking a looping clip.
 #endif
 
         // Start baking an animation state, clip or timeline, also called for each next clip in the baking array
         public void BakeClip()
         {
 #if UNITY_EDITOR
-            if (mode == Mode.AnimationClips && inheritClipSettings)
+            switch (mode)
             {
-                AnimationClipSettings originalSettings = AnimationUtility.GetAnimationClipSettings(animationClips[currentClipIndex]);
-                addLoopFrame = originalSettings.loopTime;
-            }
-            else
-            {
-                if (mode == Mode.Realtime) addLoopFrame = clipSettings.loopTime && clipSettings.loopBlend;
-                else addLoopFrame = clipSettings.loopTime;
+                case Mode.AnimationClips:
+                    AnimationClipSettings originalSettings = AnimationUtility.GetAnimationClipSettings(animationClips[currentClipIndex]);
+                    loop = originalSettings.loopTime;
+                    break;
             }
 
             StartBaking();
@@ -272,7 +197,7 @@ namespace RootMotion
 
             if (!isBaking) return;
 
-            if (addLoopFrame)
+            if (mode != Mode.Realtime && loop && setLoopFrame)
             {
                 OnSetLoopFrame(clipLength);
             }
@@ -403,6 +328,7 @@ namespace RootMotion
             {
                 if (setKeyframes)
                 {
+
                     OnSetKeyframes(clipFrameNo * clipFrameInterval, clipFrameNo >= clipFrames);
 
                     clipFrameNo++;
@@ -435,7 +361,6 @@ namespace RootMotion
                     AnimationMode.BeginSampling();
                     AnimationMode.SampleAnimationClip(gameObject, animationClips[currentClipIndex], 0f);
                     AnimationMode.EndSampling();
-                    if (OnStartClip != null) OnStartClip(animationClips[currentClipIndex], 0f);
                     break;
                 case Mode.AnimationStates:
                     animator.enabled = false;
@@ -470,11 +395,11 @@ namespace RootMotion
             switch (mode)
             {
                 case Mode.AnimationClips:
+
                     if (!AnimationMode.InAnimationMode()) AnimationMode.StartAnimationMode();
                     AnimationMode.BeginSampling();
                     AnimationMode.SampleAnimationClip(gameObject, animationClips[currentClipIndex], currentClipTime);
                     AnimationMode.EndSampling();
-                    if (OnUpdateClip != null) OnUpdateClip(animationClips[currentClipIndex], currentClipTime);
                     currentClipTime += clipFrameInterval;
                     break;
                 case Mode.AnimationStates:
@@ -497,33 +422,6 @@ namespace RootMotion
             {
                 string path = GetFullPath(i);
 
-                if (mode == Mode.AnimationClips && inheritClipSettings)
-                {
-                    AnimationClipSettings inheritedSettings = AnimationUtility.GetAnimationClipSettings(animationClips[i]);
-                    SetClipSettings(clips[i], inheritedSettings);
-                    AnimationUtility.SetAnimationClipSettings(clips[i], inheritedSettings);
-                }
-                else
-                {
-                    AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clips[i]);
-                    clipSettings.ApplyTo(settings);
-                    SetClipSettings(clips[i], settings);
-                    AnimationUtility.SetAnimationClipSettings(clips[i], settings);
-                }
-
-                var existing = AssetDatabase.LoadAssetAtPath(path, typeof(AnimationClip)) as AnimationClip;
-                if (existing != null)
-                {
-                    // Overwrite
-                    EditorUtility.CopySerialized(clips[i], existing);
-                }
-                else
-                {
-                    // Create new asset
-                    AssetDatabase.CreateAsset(clips[i], path);
-                }
-
-                /* v2.0
                 switch (mode)
                 {
                     case Baker.Mode.Realtime: break;
@@ -545,7 +443,6 @@ namespace RootMotion
                 {
                     // Overwrite with existing settings
                     AnimationClipSettings existingSettings = AnimationUtility.GetAnimationClipSettings(existing);
-                    existingSettings.stopTime = clips[i].length;
                     AnimationUtility.SetAnimationClipSettings(clips[i], existingSettings);
                     EditorUtility.CopySerialized(clips[i], existing);
                 }
@@ -554,7 +451,6 @@ namespace RootMotion
                     // Create new asset
                     AssetDatabase.CreateAsset(clips[i], path);
                 }
-                */
 
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -569,7 +465,7 @@ namespace RootMotion
             ClearBakedClips();
         }
 
-        protected virtual void SetClipSettings(AnimationClip clip, AnimationClipSettings settings) { }
+        protected virtual void SetClipSettings(AnimationClip clip, AnimationClipSettings settings) {}
 
         private string GetFullPath(int clipIndex)
         {

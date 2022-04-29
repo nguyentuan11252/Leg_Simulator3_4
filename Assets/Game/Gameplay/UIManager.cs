@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
     {
         SoccerPlayerController.isPlay = true;
         Enemy.isDealth = false;
+        Enemy.isCheck = false;
         btnReplay.SetActive(false);
         btnTapPlay.SetActive(true);
         SceneManager.LoadScene("Gameplay3");
