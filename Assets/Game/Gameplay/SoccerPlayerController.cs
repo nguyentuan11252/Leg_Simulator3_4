@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoccerPlayerController : MonoBehaviour
+public class SoccerPlayerController : Singleton<SoccerPlayerController>
 {
     [SerializeField] private Collider foot;
     [SerializeField] private Rigidbody footBody;
     [SerializeField] private float force = 10.0f;
     public static bool isStop = false;
     public static bool isPlay = false;
-
+    public float v;
+    Vector3 _startVc;
+    Vector3 _endVc;
     private enum State
     {
         Idle,
@@ -34,6 +36,7 @@ public class SoccerPlayerController : MonoBehaviour
                         {
                             if (!Input.GetMouseButtonDown(0)) return;
                             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                            _startVc = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                             if (foot.Raycast(ray, out var hit, 1000))
                             {
                                 Debug.Log("point");
@@ -49,6 +52,7 @@ public class SoccerPlayerController : MonoBehaviour
                                 return;
 
                             }
+                            _endVc = Camera.main.ScreenToViewportPoint(Input.mousePosition);
                             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                             if (!_plane.Raycast(ray, out var enter)) return;
                             var pos = ray.GetPoint(enter);
@@ -70,10 +74,16 @@ public class SoccerPlayerController : MonoBehaviour
                             }
                             var v = pos - footBody.position;
                             footBody.AddForce(v * force);
+                            LegForce();
                         }
                         break;
                 }
             }
         }
+    }
+    public void LegForce()
+    {
+        v = (_endVc.x- _startVc.x) * 0.5f;
+        Debug.Log("v: " + v);
     }
 }

@@ -30,22 +30,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*Vector3 velocity = Vector3.right * speed;
-        velocity.y = rb.velocity.y;
-        rb.velocity = velocity;
-        if (isStop == false)
-        {
-            AnimationController.Ins.SetAnimation(AnimationController.AnimationType.isRun);
-        }*/
         if (isStop == true)
         {
             AnimationController.Ins.SetAnimation(AnimationController.AnimationType.idle);
             speed = 0;
-            //DragLeg();
         }
-
-        //// Drag
-
     }
     private void OnTriggerEnter(Collider other)
     {

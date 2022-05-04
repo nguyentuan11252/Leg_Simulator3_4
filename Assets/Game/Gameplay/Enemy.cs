@@ -22,11 +22,16 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
         particleWinG3.Stop();
+
     }
     void Update()
     {
-        
+        if (SoccerPlayerController.Ins.v >= 1.1f)
+        {
+            rb.isKinematic = false;
+        }
         if (isCheck == true)
         {
             camera1.SetActive(false);
@@ -37,8 +42,6 @@ public class Enemy : MonoBehaviour
             }
             if(isDealth == true)
             {
-                /*camera1.SetActive(true);
-                camera2.SetActive(false);*/
                 camera2.transform.DOMove(camera1.transform.position,0.5f);
                 camera2.transform.DORotate(new Vector3(camera1.transform.position.x+4.178f, camera1.transform.position.y+16.79f, camera1.transform.position.z+5.97f), 0.5f);
             }
@@ -79,6 +82,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.tag == "Foot")
         {
             isCheck = false;
+            
         }
     }
     private void OnTriggerExit(Collider other)
