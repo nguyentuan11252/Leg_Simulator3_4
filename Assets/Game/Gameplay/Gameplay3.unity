@@ -2682,8 +2682,16 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2148924009504527633, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
+      propertyPath: m_Swing2Limit.limit
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148924009504527633, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_LowTwistLimit.limit
-      value: -110.01471
+      value: -133.31229
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148924009504527633, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
+      propertyPath: m_HighTwistLimit.limit
+      value: 1.9076157
       objectReference: {fileID: 0}
     - target: {fileID: 2258184299915251843, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Layer
