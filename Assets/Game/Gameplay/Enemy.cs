@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     }
     void Update()
     {
-        if (SoccerPlayerController.Ins.v >= 1f)
+        if (SoccerPlayerController.Ins.v >= 0.9f)
         {
             rb.isKinematic = false;
         }

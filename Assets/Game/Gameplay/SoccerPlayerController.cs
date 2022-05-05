@@ -84,5 +84,6 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
     public void LegForce()
     {
         v = (_endVc.x- _startVc.x) * 0.5f;
+        Debug.Log("v: " + v);
     }
 }

@@ -20,7 +20,7 @@ public class PCylinder : MonoBehaviour
     {
         if(collision.gameObject.tag == "RightLeg" && SoccerPlayerController.Ins.v >0)
         {
-            transform.DORotate(new Vector3(0, 0, transform.rotation.z-10), 1f);
+            transform.DORotate(new Vector3(0, 0, transform.rotation.z-30), 1f);
         }
     }
     private void OnCollisionExit(Collision collision)
