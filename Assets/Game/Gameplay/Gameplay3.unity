@@ -990,13 +990,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1134455442}
-  m_LocalRotation: {x: 0, y: 0, z: 0.4057798, w: 0.91397095}
-  m_LocalPosition: {x: 3.005, y: -0.01, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.4053809, w: 0.91414785}
+  m_LocalPosition: {x: 3.048, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 42848815}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 47.88}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 47.83}
 --- !u!65 &1134455444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1008,8 +1008,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0390611, y: 0.10305248, z: 1}
-  m_Center: {x: -0.33672473, y: 0.57201844, z: 0}
+  m_Size: {x: 1.2379452, y: 0.1030525, z: 1}
+  m_Center: {x: -0.41974467, y: 0.57201844, z: 0}
 --- !u!54 &1134455445
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2623,7 +2623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1184723051152440073, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_HighTwistLimit.limit
-      value: 161.86195
+      value: 165.42938
       objectReference: {fileID: 0}
     - target: {fileID: 1184867195719318461, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Layer
@@ -2655,11 +2655,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1579666569747272517, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_LowTwistLimit.limit
-      value: -52.86314
+      value: -40.949554
       objectReference: {fileID: 0}
     - target: {fileID: 1579666569747272517, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_HighTwistLimit.limit
-      value: -52.86314
+      value: 18.752968
       objectReference: {fileID: 0}
     - target: {fileID: 1659743077083734472, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Layer
@@ -2687,11 +2687,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2148924009504527633, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_LowTwistLimit.limit
-      value: -133.31229
+      value: -114.17263
       objectReference: {fileID: 0}
     - target: {fileID: 2148924009504527633, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_HighTwistLimit.limit
-      value: 1.9076157
+      value: -0.3208046
       objectReference: {fileID: 0}
     - target: {fileID: 2258184299915251843, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Layer
@@ -2855,11 +2855,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6119649543061167468, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Size.y
-      value: 0.032944586
+      value: 0.028383289
       objectReference: {fileID: 0}
     - target: {fileID: 6119649543061167468, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Size.z
-      value: 0.018463675
+      value: 0.017729755
       objectReference: {fileID: 0}
     - target: {fileID: 6119649543061167468, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Enabled
@@ -2867,15 +2867,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6119649543061167468, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Center.x
-      value: -0.000000014947704
+      value: -0.000000020011072
       objectReference: {fileID: 0}
     - target: {fileID: 6119649543061167468, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Center.y
-      value: 0.013972353
+      value: 0.011691728
       objectReference: {fileID: 0}
     - target: {fileID: 6119649543061167468, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Center.z
-      value: -0.004231726
+      value: -0.0038647286
       objectReference: {fileID: 0}
     - target: {fileID: 6142246083488259822, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Layer
@@ -3021,6 +3021,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8955386396114977298, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
+      propertyPath: objBox
+      value: 
+      objectReference: {fileID: 1134455442}
     - target: {fileID: 8955386396114977298, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: posCamera
       value: 

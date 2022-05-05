@@ -27,7 +27,7 @@ public class PCylinder : MonoBehaviour
     {
         if(collision.gameObject.tag == "RightLeg")
         {
-            transform.DORotate(new Vector3(0, 0, transform.rotation.z), 1f);
+            transform.DORotate(new Vector3(0, 0, transform.rotation.z+5f), 1f);
         }
     }
 }
