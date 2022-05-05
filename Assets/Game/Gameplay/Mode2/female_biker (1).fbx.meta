@@ -6,7 +6,12 @@ ModelImporter:
   - first:
       74: -6201834280730877740
     second: Armature|Armature|Armature|Armature|mixamo.com|Layer0|Armature|Armature|
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert7
+    second: {fileID: 2100000, guid: ac01e75e675aa7f46825160b45295b2b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
