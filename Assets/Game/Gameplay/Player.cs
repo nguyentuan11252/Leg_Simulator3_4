@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Camera mainCamera;
     public GameObject posCamera;
+    [SerializeField]
+    private GameObject objBox;
 
     private void Awake()
     {
@@ -34,6 +36,13 @@ public class Player : MonoBehaviour
         {
             AnimationController.Ins.SetAnimation(AnimationController.AnimationType.idle);
             speed = 0;
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            objBox.SetActive(true);
+        }else if (Input.GetMouseButtonUp(0))
+        {
+            objBox.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)

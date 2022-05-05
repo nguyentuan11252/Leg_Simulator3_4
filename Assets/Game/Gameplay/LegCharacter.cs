@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class LegCharacter : MonoBehaviour
@@ -29,13 +30,14 @@ public class LegCharacter : MonoBehaviour
     [SerializeField]
     private ParticleSystem particleWin;
     public static bool isDealth = false;
-
+    public GameObject btnTapDrag;
     private void Awake()
     {
         Ins = this;
     }
     void Start()
     {
+        btnTapDrag.SetActive(false);
         _startVc = Vector3.zero;
         _endVc = Vector3.zero;
         particleSmoke.Stop();
@@ -63,7 +65,7 @@ public class LegCharacter : MonoBehaviour
         {
             _startVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
             v = (_startVc.y - _endVc.y) * 0.5f;
-
+            btnTapDrag.SetActive(false);
             _touched = false;
             if (v != 0)
             {

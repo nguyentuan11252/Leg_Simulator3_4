@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
 
     public GameObject btnReplay;
     public GameObject btnTapPlay;
+    
+
     private void Awake()
     {
         Ins = this;
