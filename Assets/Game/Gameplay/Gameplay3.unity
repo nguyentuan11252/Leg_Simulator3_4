@@ -2659,7 +2659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1579666569747272517, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_HighTwistLimit.limit
-      value: 18.752968
+      value: 26.93139
       objectReference: {fileID: 0}
     - target: {fileID: 1659743077083734472, guid: 47e194a706b019f4ab8d02e78c25ae4e, type: 3}
       propertyPath: m_Layer

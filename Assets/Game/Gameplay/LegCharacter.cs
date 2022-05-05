@@ -31,6 +31,12 @@ public class LegCharacter : MonoBehaviour
     private ParticleSystem particleWin;
     public static bool isDealth = false;
     public GameObject btnTapDrag;
+    [SerializeField]
+    private Animator animWin;
+    [SerializeField]
+    private Image imgPower;
+    [SerializeField]
+    private GameObject objCamera;
     private void Awake()
     {
         Ins = this;
@@ -43,6 +49,9 @@ public class LegCharacter : MonoBehaviour
         particleSmoke.Stop();
         particleSmoke2.Stop();
         particleWin.Stop();
+        imgPower.fillAmount = 0;
+        objCamera.transform.position = objCamera.transform.position + new Vector3(0.15f,0.6f, -3.08f);
+        StartCoroutine(CameraMove());
     }
 
     // Update is called once per frame
@@ -55,7 +64,17 @@ public class LegCharacter : MonoBehaviour
             
             DragFootAndPedal();
         }
+        if (imgPower.fillAmount < targetPow)
+        {
+            imgPower.fillAmount += speed * Time.deltaTime;
+        }
+        if(imgPower.fillAmount > targetPow)
+        {
+            imgPower.fillAmount -= speed * Time.deltaTime;
+        }
+        
     }
+    
     void DragFootAndPedal()
     {
         Vector3 posMouse = Input.mousePosition;
@@ -65,6 +84,8 @@ public class LegCharacter : MonoBehaviour
         {
             _startVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
             v = (_startVc.y - _endVc.y) * 0.5f;
+            IncrementProgress(v);
+
             btnTapDrag.SetActive(false);
             _touched = false;
             if (v != 0)
@@ -82,6 +103,7 @@ public class LegCharacter : MonoBehaviour
                 {
                     //Run
                     //phut phao
+                    animWin.SetTrigger("Win");
                     isDealth = true;
                     SoccerPlayerController.isStop = false;
                     particleSmoke2.Play();
@@ -98,9 +120,15 @@ public class LegCharacter : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             _endVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
+            RemovePow(v);
         }
         if (!_touched) return;
         
+    }
+    IEnumerator CameraMove()
+    {
+        yield return new WaitForSeconds(1);
+        objCamera.transform.DOMove(new Vector3(2.96f, 1.08f, -2.9f), 2f);
     }
     IEnumerator ResetPedal()
     {
@@ -120,5 +148,15 @@ public class LegCharacter : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         particleWin.Play();
+    }
+    float targetPow = 0;
+    float speed = 1f;
+    public void IncrementProgress(float newProgress)
+    {
+        targetPow = imgPower.fillAmount + newProgress;
+    }
+    public void RemovePow(float newProgress)
+    {
+        targetPow = imgPower.fillAmount - newProgress;
     }
 }
