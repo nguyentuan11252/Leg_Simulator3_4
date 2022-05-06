@@ -30,7 +30,7 @@ public class LegCharacter : MonoBehaviour
     [SerializeField]
     private ParticleSystem particleWin;
     public static bool isDealth = false;
-    public GameObject btnTapDrag;
+    /*public GameObject btnTapDrag;*/
     [SerializeField]
     private Animator animWin;
     [SerializeField]
@@ -44,7 +44,7 @@ public class LegCharacter : MonoBehaviour
     }
     void Start()
     {
-        btnTapDrag.SetActive(false);
+        /*btnTapDrag.SetActive(false);*/
         _startVc = Vector3.zero;
         _endVc = Vector3.zero;
         particleSmoke.Stop();
@@ -92,7 +92,7 @@ public class LegCharacter : MonoBehaviour
             v = (_startVc.y - _endVc.y) * 0.5f;
             IncrementProgress(v);
 
-            btnTapDrag.SetActive(false);
+            /*btnTapDrag.SetActive(false);*/
             _touched = false;
             if (v != 0)
             {

@@ -33,7 +33,7 @@ public class FootCharacterMotor : MonoBehaviour
     {
         if (other.tag == "Pedal" && isFailTrigger == false)
         {
-            LegCharacter.Ins.btnTapDrag.SetActive(true);
+            /*LegCharacter.Ins.btnTapDrag.SetActive(true);*/
             isFailTrigger = true;
             StartCoroutine(Delay());
             SoccerPlayerController.isStop = true;
