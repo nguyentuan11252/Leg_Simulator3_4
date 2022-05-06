@@ -9,6 +9,7 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
     [SerializeField] private float force = 10.0f;
     public static bool isStop = false;
     public static bool isPlay = false;
+    public static bool isMoveLeg = false;
     public float v;
     Vector3 _startVc;
     Vector3 _endVc;
@@ -26,6 +27,18 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
 
     void Update()
     {
+        if (isStop == true)
+        {
+            if (!Input.GetMouseButton(0)) return;
+            LegCharacter.Ins.btnTapDrag.SetActive(false);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (foot.Raycast(ray, out var hit, 1000))
+            {
+                isStop = false;
+                FootCharacterMotor.Ins.fixedJointFoot.connectedBody = null;
+            }
+        }
+
         if (isStop == false)
         {
             if (isPlay == false)
@@ -40,12 +53,18 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
                             if (foot.Raycast(ray, out var hit, 1000))
                             {
                                 Debug.Log("point");
+                                isMoveLeg = true;
                                 _state = State.Captured;
+                            }
+                            else
+                            {
+                                isMoveLeg = false;
                             }
                         }
                         break;
                     case State.Captured:
                         {
+
                             if (Input.GetMouseButtonUp(0))
                             {
                                 _state = State.Idle;
@@ -83,7 +102,6 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
     }
     public void LegForce()
     {
-        v = (_endVc.x- _startVc.x) * 0.5f;
-        Debug.Log("v: " + v);
+        v = (_endVc.x - _startVc.x) * 0.5f;
     }
 }

@@ -24,19 +24,24 @@ public class FootCharacterMotor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SoccerPlayerController.isStop == true)
+        if (SoccerPlayerController.isStop == true)
         {
             /*fixedJointFoot.connectedBody = target.GetComponent<Rigidbody>();*/
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Pedal" && isFailTrigger == false)
+        if (other.tag == "Pedal" /*&& isFailTrigger == false*/)
+        {
+            //LegCharacter.Ins.btnTapDrag.SetActive(true);
+            /*isFailTrigger = true;*/
+            StartCoroutine(Delay());
+            SoccerPlayerController.isStop = true;
+        }
+        if (other.tag == "Pedal" && isFailTrigger == false)
         {
             LegCharacter.Ins.btnTapDrag.SetActive(true);
             isFailTrigger = true;
-            StartCoroutine(Delay());
-            SoccerPlayerController.isStop = true;
         }
     }
     private void OnTriggerExit(Collider other)

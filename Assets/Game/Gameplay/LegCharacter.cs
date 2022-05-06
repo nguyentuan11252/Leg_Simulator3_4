@@ -37,6 +37,7 @@ public class LegCharacter : MonoBehaviour
     private Image imgPower;
     [SerializeField]
     private GameObject objCamera;
+    bool checkWin = false;
     private void Awake()
     {
         Ins = this;
@@ -50,36 +51,41 @@ public class LegCharacter : MonoBehaviour
         particleSmoke2.Stop();
         particleWin.Stop();
         imgPower.fillAmount = 0;
-        objCamera.transform.position = objCamera.transform.position + new Vector3(0.15f,0.6f, -3.08f);
+        objCamera.transform.position = objCamera.transform.position + new Vector3(0.15f, 0.6f, -3.08f);
         StartCoroutine(CameraMove());
+        checkWin = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (SoccerPlayerController.isStop == true)
+        /*if (SoccerPlayerController.isMoveLeg == true)
         {
-            
+            Debug.Log("run ");
+        }*/
+        if (SoccerPlayerController.isStop == true && checkWin == false)
+        {
             footCharacter.transform.position = _posPedal.position;
             
             DragFootAndPedal();
         }
+
         if (imgPower.fillAmount < targetPow)
         {
             imgPower.fillAmount += speed * Time.deltaTime;
         }
-        if(imgPower.fillAmount > targetPow)
+        if (imgPower.fillAmount > targetPow)
         {
             imgPower.fillAmount -= speed * Time.deltaTime;
         }
-        
+
     }
-    
+
     void DragFootAndPedal()
     {
         Vector3 posMouse = Input.mousePosition;
         Ray ray = mainCamera.ScreenPointToRay(posMouse);
-        
+
         if (Input.GetMouseButtonDown(0))
         {
             _startVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
@@ -105,6 +111,7 @@ public class LegCharacter : MonoBehaviour
                     //phut phao
                     animWin.SetTrigger("Win");
                     isDealth = true;
+                    checkWin = true;
                     SoccerPlayerController.isStop = false;
                     particleSmoke2.Play();
                     StartCoroutine(ParticleWin());
@@ -121,9 +128,10 @@ public class LegCharacter : MonoBehaviour
         {
             _endVc = mainCamera.ScreenToViewportPoint(Input.mousePosition);
             RemovePow(v);
+            
         }
         if (!_touched) return;
-        
+
     }
     IEnumerator CameraMove()
     {
@@ -158,5 +166,6 @@ public class LegCharacter : MonoBehaviour
     public void RemovePow(float newProgress)
     {
         targetPow = imgPower.fillAmount - newProgress;
+        
     }
 }

@@ -56,6 +56,8 @@ public class UIManager : MonoBehaviour
         btnTapPlay.SetActive(true);
         btnReplay.SetActive(false);
         SceneManager.LoadScene("Gameplay4");
+        FootCharacterMotor.Ins.fixedJointFoot.connectedBody = null;
+        SoccerPlayerController.isStop = false;
     }
     public void TapPlayGame()
     {
