@@ -63,7 +63,7 @@ public class LegCharacter : MonoBehaviour
         {
             Debug.Log("run ");
         }*/
-        if (SoccerPlayerController.isStop == true && checkWin == false)
+        if (SoccerPlayerController.isStop == true/* && checkWin == false*/)
         {
             footCharacter.transform.position = _posPedal.position;
             

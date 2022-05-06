@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -70,7 +71,12 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(0.6f);
         particleWinG3.Play();
-        
+        StartCoroutine(NextLevel());
+    }
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("Gameplay4");
     }
     IEnumerator CameraFollowPlayer()
     {

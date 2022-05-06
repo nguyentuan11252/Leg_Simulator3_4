@@ -31,18 +31,18 @@ public class FootCharacterMotor : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Pedal" /*&& isFailTrigger == false*/)
-        {
-            //LegCharacter.Ins.btnTapDrag.SetActive(true);
-            /*isFailTrigger = true;*/
-            StartCoroutine(Delay());
-            SoccerPlayerController.isStop = true;
-        }
         if (other.tag == "Pedal" && isFailTrigger == false)
         {
             LegCharacter.Ins.btnTapDrag.SetActive(true);
             isFailTrigger = true;
+            StartCoroutine(Delay());
+            SoccerPlayerController.isStop = true;
         }
+        /*if (other.tag == "Pedal" && isFailTrigger == false)
+        {
+            LegCharacter.Ins.btnTapDrag.SetActive(true);
+            isFailTrigger = true;
+        }*/
     }
     private void OnTriggerExit(Collider other)
     {

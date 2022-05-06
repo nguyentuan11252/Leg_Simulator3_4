@@ -27,7 +27,7 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
 
     void Update()
     {
-        if (isStop == true)
+        /*if (isStop == true)
         {
             if (!Input.GetMouseButton(0)) return;
             LegCharacter.Ins.btnTapDrag.SetActive(false);
@@ -38,7 +38,7 @@ public class SoccerPlayerController : Singleton<SoccerPlayerController>
                 FootCharacterMotor.Ins.fixedJointFoot.connectedBody = null;
             }
         }
-
+*/
         if (isStop == false)
         {
             if (isPlay == false)

@@ -20,18 +20,16 @@ public class FollowFoot : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             mousePosition = Input.mousePosition;
-            //mousePosition.z = 2.6f;
-            Vector3 position = Camera.main.ScreenToViewportPoint(mousePosition);
-            position.x = 2f;
-            transform.position = position;
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            //transform.position = Vector2.Lerp(transform.position, mousePosition, moveSpeed);
         }
-        /*if (dist > 0f)
+        /*if (dist >= 0.3f)
         {
-            transform.position = Vector2.Lerp(transform.position, foot.position, moveSpeed + 1f);
-        }*/
+            transform.position = Vector2.Lerp(transform.position, foot.position, moveSpeed + 0.5f);
+        }
         else
         {
             return;
-        }
+        }*/
     }
 }
